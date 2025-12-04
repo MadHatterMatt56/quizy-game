@@ -43,6 +43,14 @@ const WORD_LISTS = {
   ]
 };
 
+// Hint elements
+const hintBtn = document.getElementById("hintBtn");
+const hintTextEl = document.getElementById("hintText");
+
+// Hint state
+let currentHint = "";
+let hintRevealed = false;
+
 
 // Max wrong guesses by difficulty
 const MAX_WRONG = {
