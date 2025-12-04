@@ -1,47 +1,48 @@
 // === WORD LISTS BY DIFFICULTY ===
 const WORD_LISTS = {
   easy: [
-    "cat",
-    "dog",
-    "tree",
-    "bird",
-    "moon",
-    "sun",
-    "house",
-    "water",
-    "pizza",
-    "game"
+    { word: "cat",   hint: "A small house pet that says meow." },
+    { word: "dog",   hint: "Often called a human's best friend." },
+    { word: "tree",  hint: "A tall plant with a trunk and branches." },
+    { word: "bird",  hint: "An animal that usually has feathers and can fly." },
+    { word: "moon",  hint: "You can see it in the night sky." },
+    { word: "sun",   hint: "The star at the center of our solar system." },
+    { word: "house", hint: "A place where people live." },
+    { word: "water", hint: "You drink it every day." },
+    { word: "pizza", hint: "A popular food with cheese and toppings." },
+    { word: "game",  hint: "Something people play for fun." }
   ],
   medium: [
-    "planet",
-    "rocket",
-    "winter",
-    "summer",
-    "garden",
-    "jungle",
-    "window",
-    "dragon",
-    "castle",
-    "pirate",
-    "switch",
-    "decimal",
-    "sample"
+    { word: "planet",  hint: "Earth is one of these." },
+    { word: "rocket",  hint: "Used to travel into space." },
+    { word: "winter",  hint: "The coldest season of the year." },
+    { word: "summer",  hint: "The warmest season of the year." },
+    { word: "garden",  hint: "A place where you grow plants." },
+    { word: "jungle",  hint: "A thick forest in a tropical area." },
+    { word: "window",  hint: "You look through this in a wall." },
+    { word: "dragon",  hint: "A mythical, fire-breathing creature." },
+    { word: "castle",  hint: "A large building where kings and queens might live." },
+    { word: "pirate",  hint: "A sailor who steals treasure." },
+    { word: "switch",  hint: "You flip this to turn something on or off." },
+    { word: "decimal", hint: "A number with a dot in it, like 3.14." },
+    { word: "sample",  hint: "A small part that represents the whole." }
   ],
   hard: [
-    "mystery",
-    "rhythm",
-    "oxygen",
-    "galaxy",
-    "phantom",
-    "complex",
-    "zealous",
-    "jukebox",
-    "vortex",
-    "pixelate",
-    "hardware",
-    "software"
+    { word: "mystery",  hint: "A story where you don't know the answer until the end." },
+    { word: "rhythm",   hint: "A beat pattern in music; this word has no regular vowels." },
+    { word: "oxygen",   hint: "A gas you breathe to stay alive." },
+    { word: "galaxy",   hint: "A massive group of stars, like the Milky Way." },
+    { word: "phantom",  hint: "Another word for a ghost." },
+    { word: "complex",  hint: "The opposite of simple." },
+    { word: "zealous",  hint: "Very enthusiastic or passionate." },
+    { word: "jukebox",  hint: "A machine that plays music when you put in coins." },
+    { word: "vortex",   hint: "A spinning mass of water or air." },
+    { word: "pixelate", hint: "What happens to images when you zoom in too far." },
+    { word: "hardware", hint: "The physical parts of a computer." },
+    { word: "software", hint: "Programs that run on a computer." }
   ]
 };
+
 
 // Max wrong guesses by difficulty
 const MAX_WRONG = {
