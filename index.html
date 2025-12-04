@@ -1,29 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Word Guessing Game</title>
+  <meta charset="UTF-8" />
+  <title>Animated Hangman</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="game-container">
-    <h1>Word Guessing Game</h1>
-    <p class="instructions">Guess the hidden word one letter at a time!</p>
+  <div class="game-container" id="gameContainer">
+    <h1 class="title">Animated Hangman</h1>
 
-    <div id="wordDisplay" class="word-display"></div>
+    <div class="top-bar">
+      <div class="difficulty-group">
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+      <div class="stats">
+        <span id="attemptsDisplay">Attempts: 0 / 0</span>
+      </div>
+    </div>
 
-    <input id="letterInput" type="text" maxlength="1" placeholder="Enter a letter" />
-    <button id="guessBtn">Guess</button>
+    <div class="play-area">
+      <div class="hangman-wrapper">
+        <div class="gallows">
+          <div class="g-base"></div>
+          <div class="g-pole"></div>
+          <div class="g-beam"></div>
+          <div class="g-rope"></div>
+        </div>
 
-    <p id="message" class="message"></p>
+        <div class="hangman" id="hangman">
+          <div class="hm-part hm-head bodypart"></div>
+          <div class="hm-part hm-body bodypart"></div>
+          <div class="hm-part hm-arm-left bodypart"></div>
+          <div class="hm-part hm-arm-right bodypart"></div>
+          <div class="hm-part hm-leg-left bodypart"></div>
+          <div class="hm-part hm-leg-right bodypart"></div>
+          <div class="hm-part hm-eye-left bodypart"></div>
+          <div class="hm-part hm-eye-right bodypart"></div>
+        </div>
+      </div>
 
-    <p>Wrong guesses: <span id="wrongLetters"></span></p>
-    <p>Attempts left: <span id="attempts"></span></p>
+      <div class="right-panel">
+        <div id="status" class="status">
+          Pick a letter to begin!
+        </div>
 
-    <button id="resetBtn" class="reset-btn">Restart Game</button>
+        <div id="wordDisplay" class="word-display">
+          _
+        </div>
+
+        <div id="usedLetters" class="used-letters">
+          Used letters: –
+        </div>
+
+        <div id="keyboard" class="keyboard"></div>
+
+        <button id="newGameBtn" class="btn-primary">
+          🔁 New Game
+        </button>
+      </div>
+    </div>
   </div>
 
-  <script src="script.js" defer></script>
+  <!-- Sound effects (add your own .mp3/.wav files in /sounds/) -->
+  <audio id="sfx-correct" src="sounds/correct.mp3" preload="auto"></audio>
+  <audio id="sfx-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
+  <audio id="sfx-win" src="sounds/win.mp3" preload="auto"></audio>
+  <audio id="sfx-lose" src="sounds/lose.mp3" preload="auto"></audio>
+  <audio id="sfx-click" src="sounds/click.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
 </body>
 </html>
