@@ -1,0 +1,52 @@
+/* style.css */
+body {
+    background: #f4f4f4;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    margin: 0;
+}
+
+the .game-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 350px;
+    text-align: center;
+}
+
+.word-display {
+    font-size: 2rem;
+    margin: 20px 0;
+    letter-spacing: 6px;
+}
+
+input {
+    padding: 8px;
+    font-size: 1rem;
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background: #0073ff;
+    color: white;
+    border-radius: 6px;
+}
+
+.reset-btn {
+    background: #444;
+    margin-top: 15px;
+}
+
+.message {
+    height: 20px;
+    margin: 10px 0;
+    font-weight: bold;
+}
