@@ -45,14 +45,15 @@
       </div>
 
       <div class="right-panel">
+
         <div id="status" class="status">
           Pick a letter to begin!
         </div>
-        <div class="hint-row">
-  <button id="hintBtn" class="btn-secondary">💡 Show Hint</button>
-  <span id="hintText" class="hint-text">Hint: ???</span>
-</div>
 
+        <!-- NEW QUESTION HINT AREA -->
+        <div id="questionHint" class="question-hint">
+          Question: ???
+        </div>
 
         <div id="wordDisplay" class="word-display">
           _
@@ -71,7 +72,7 @@
     </div>
   </div>
 
-  <!-- Sound effects (add your own .mp3/.wav files in /sounds/) -->
+  <!-- Sound effects -->
   <audio id="sfx-correct" src="sounds/correct.mp3" preload="auto"></audio>
   <audio id="sfx-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
   <audio id="sfx-win" src="sounds/win.mp3" preload="auto"></audio>
