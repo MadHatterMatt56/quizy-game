@@ -1,56 +1,47 @@
 // === WORD LISTS BY DIFFICULTY ===
 const WORD_LISTS = {
   easy: [
-    { word: "cat",   hint: "A small house pet that says meow." },
-    { word: "dog",   hint: "Often called a human's best friend." },
-    { word: "tree",  hint: "A tall plant with a trunk and branches." },
-    { word: "bird",  hint: "An animal that usually has feathers and can fly." },
-    { word: "moon",  hint: "You can see it in the night sky." },
-    { word: "sun",   hint: "The star at the center of our solar system." },
-    { word: "house", hint: "A place where people live." },
-    { word: "water", hint: "You drink it every day." },
-    { word: "pizza", hint: "A popular food with cheese and toppings." },
-    { word: "game",  hint: "Something people play for fun." }
+    { word: "cat", question: "What says meow?" },
+    { word: "dog", question: "What barks?" },
+    { word: "tree", question: "What has branches?" },
+    { word: "bird", question: "What usually flies?" },
+    { word: "moon", question: "What appears at night in the sky?" },
+    { word: "sun", question: "What shines during the day?" },
+    { word: "house", question: "What do people live inside?" },
+    { word: "water", question: "What do humans drink?" },
+    { word: "pizza", question: "What food is cheesy and round?" },
+    { word: "game", question: "What do people play for fun?" }
   ],
   medium: [
-    { word: "planet",  hint: "Earth is one of these." },
-    { word: "rocket",  hint: "Used to travel into space." },
-    { word: "winter",  hint: "The coldest season of the year." },
-    { word: "summer",  hint: "The warmest season of the year." },
-    { word: "garden",  hint: "A place where you grow plants." },
-    { word: "jungle",  hint: "A thick forest in a tropical area." },
-    { word: "window",  hint: "You look through this in a wall." },
-    { word: "dragon",  hint: "A mythical, fire-breathing creature." },
-    { word: "castle",  hint: "A large building where kings and queens might live." },
-    { word: "pirate",  hint: "A sailor who steals treasure." },
-    { word: "switch",  hint: "You flip this to turn something on or off." },
-    { word: "decimal", hint: "A number with a dot in it, like 3.14." },
-    { word: "sample",  hint: "A small part that represents the whole." }
+    { word: "planet", question: "Earth is one of these. What is it?" },
+    { word: "rocket", question: "What travels into space?" },
+    { word: "winter", question: "What is the coldest season?" },
+    { word: "summer", question: "What is the warmest season?" },
+    { word: "garden", question: "Where do you grow flowers?" },
+    { word: "jungle", question: "A tropical forest is called what?" },
+    { word: "window", question: "You look through this in a wall. What is it?" },
+    { word: "dragon", question: "A fire-breathing creature is called what?" },
+    { word: "castle", question: "A king or queen lives in a what?" },
+    { word: "pirate", question: "A treasure thief on the sea is called what?" },
+    { word: "switch", question: "What do you flip to turn something on/off?" },
+    { word: "decimal", question: "A number with a dot is called what?" },
+    { word: "sample", question: "A small part of something bigger is called what?" }
   ],
   hard: [
-    { word: "mystery",  hint: "A story where you don't know the answer until the end." },
-    { word: "rhythm",   hint: "A beat pattern in music; this word has no regular vowels." },
-    { word: "oxygen",   hint: "A gas you breathe to stay alive." },
-    { word: "galaxy",   hint: "A massive group of stars, like the Milky Way." },
-    { word: "phantom",  hint: "Another word for a ghost." },
-    { word: "complex",  hint: "The opposite of simple." },
-    { word: "zealous",  hint: "Very enthusiastic or passionate." },
-    { word: "jukebox",  hint: "A machine that plays music when you put in coins." },
-    { word: "vortex",   hint: "A spinning mass of water or air." },
-    { word: "pixelate", hint: "What happens to images when you zoom in too far." },
-    { word: "hardware", hint: "The physical parts of a computer." },
-    { word: "software", hint: "Programs that run on a computer." }
+    { word: "mystery", question: "A story with an unknown ending is called what?" },
+    { word: "rhythm", question: "Music has a beat called what?" },
+    { word: "oxygen", question: "Humans must breathe what gas?" },
+    { word: "galaxy", question: "The Milky Way is a what?" },
+    { word: "phantom", question: "Another word for ghost is what?" },
+    { word: "complex", question: "The opposite of simple is what?" },
+    { word: "zealous", question: "Someone very enthusiastic is what?" },
+    { word: "jukebox", question: "A coin-operated music machine is what?" },
+    { word: "vortex", question: "A spinning mass of air or water is called what?" },
+    { word: "pixelate", question: "An image becomes blocky when it does what?" },
+    { word: "hardware", question: "Computer parts you can touch are called what?" },
+    { word: "software", question: "Computer programs are called what?" }
   ]
 };
-
-// Hint elements
-const hintBtn = document.getElementById("hintBtn");
-const hintTextEl = document.getElementById("hintText");
-
-// Hint state
-let currentHint = "";
-let hintRevealed = false;
-
 
 // Max wrong guesses by difficulty
 const MAX_WRONG = {
@@ -70,6 +61,7 @@ const newGameBtn = document.getElementById("newGameBtn");
 const gameContainer = document.getElementById("gameContainer");
 const hangmanEl = document.getElementById("hangman");
 const bodyParts = Array.from(document.querySelectorAll(".bodypart"));
+const questionHintEl = document.getElementById("questionHint");
 
 // Sound effects
 const sfx = {
@@ -87,6 +79,7 @@ let usedLetters = new Set();
 let wrongGuesses = 0;
 let maxWrong = MAX_WRONG.medium;
 let gameOver = false;
+let currentQuestion = "";
 
 // === INITIAL SETUP ===
 createKeyboard();
@@ -136,27 +129,26 @@ function attachListeners() {
   });
 }
 
-// Start a new round
+// Start new game
 function startNewGame() {
   const diff = difficultySelect.value;
-  const words = WORD_LISTS[diff];
+  const list = WORD_LISTS[diff];
 
-  // Choose random word + hint
-  const choice = words[Math.floor(Math.random() * words.length)];
+  const choice = list[Math.floor(Math.random() * list.length)];
+
   secretWord = choice.word.toLowerCase();
-  currentHint = choice.hint;
+  currentQuestion = choice.question;
 
   revealedLetters = Array(secretWord.length).fill("_");
   usedLetters = new Set();
   wrongGuesses = 0;
   maxWrong = MAX_WRONG[diff];
   gameOver = false;
-  hintRevealed = false;
 
   updateWordDisplay();
   updateUsedLettersDisplay();
   updateAttemptsDisplay();
-  updateHintDisplay();
+  updateQuestionHint();
   setStatus("Game started! Pick a letter.", "neutral");
 
   resetKeyboard();
@@ -164,6 +156,9 @@ function startNewGame() {
   hideAllBodyParts();
 }
 
+// Update question hint
+function updateQuestionHint() {
+  questionHintEl.textContent = "Question: " + currentQuestion;
 }
 
 // Handle a letter guess
@@ -199,9 +194,7 @@ function handleLetter(letter) {
     } else {
       const remaining = maxWrong - wrongGuesses;
       setStatus(
-        `Nope! "${letter.toUpperCase()}" is not in the word. ${remaining} wrong guess${
-          remaining === 1 ? "" : "es"
-        } left.`,
+        `Nope! "${letter.toUpperCase()}" is not in the word. ${remaining} wrong guess${remaining === 1 ? "" : "es"} left.`,
         "bad"
       );
     }
@@ -210,7 +203,7 @@ function handleLetter(letter) {
   updateUsedLettersDisplay();
 }
 
-// Reveal matching letters in the word
+// Reveal correct letters
 function revealLetter(letter) {
   for (let i = 0; i < secretWord.length; i++) {
     if (secretWord[i] === letter) {
@@ -220,7 +213,7 @@ function revealLetter(letter) {
   updateWordDisplay();
 }
 
-// Update the word display
+// Update word display
 function updateWordDisplay() {
   wordDisplayEl.textContent = revealedLetters.join(" ");
 }
@@ -231,123 +224,18 @@ function updateUsedLettersDisplay() {
     usedLettersEl.textContent = "Used letters: –";
     return;
   }
-  const letters = Array.from(usedLetters)
-    .sort()
-    .map((l) => l.toUpperCase())
-    .join(" ");
-  usedLettersEl.textContent = "Used letters: " + letters;
+  usedLettersEl.textContent =
+    "Used letters: " +
+    Array.from(usedLetters)
+      .sort()
+      .map((l) => l.toUpperCase())
+      .join(" ");
 }
 
-// Attempts display
+// Update attempts display
 function updateAttemptsDisplay() {
   attemptsDisplayEl.textContent = `Attempts: ${wrongGuesses} / ${maxWrong}`;
 }
 
-// Status text with simple color hint
-function setStatus(text, type = "neutral") {
-  statusEl.textContent = text;
-  statusEl.style.color =
-    type === "good"
-      ? "#4ade80"
-      : type === "bad"
-      ? "#f97373"
-      : "#d1d5db";
-}
-
-// Disable one key
-function disableKey(letter) {
-  const btn = keyboardEl.querySelector(`.key-btn[data-letter="${letter}"]`);
-  if (btn) {
-    btn.classList.add("disabled");
-    btn.disabled = true;
-  }
-}
-
-// Reset keyboard to all enabled
-function resetKeyboard() {
-  const keys = keyboardEl.querySelectorAll(".key-btn");
-  keys.forEach((btn) => {
-    btn.classList.remove("disabled");
-    btn.disabled = false;
-  });
-}
-
-// Show hangman piece
-function revealBodyPart(step) {
-  // We use step-1 because steps start at 1, array at 0.
-  const idx = step - 1;
-  if (bodyParts[idx]) {
-    bodyParts[idx].classList.add("visible");
-  }
-}
-
-// Hide all body parts
-function hideAllBodyParts() {
-  bodyParts.forEach((part) => part.classList.remove("visible"));
-}
-
-// Handle win
-function handleWin() {
-  gameOver = true;
-  setStatus(
-    `You win! The word was "${secretWord.toUpperCase()}". Press Enter or "New Game" to play again.`,
-    "good"
-  );
-  hangmanWinAnimation();
-  playSound("win");
-}
-
-// Handle lose
-function handleLose() {
-  gameOver = true;
-  // reveal all letters
-  revealedLetters = secretWord.toUpperCase().split("");
-  updateWordDisplay();
-
-  setStatus(
-    `Game over! The word was "${secretWord.toUpperCase()}". Press Enter or "New Game" to try again.`,
-    "bad"
-  );
-  hangmanLoseAnimation();
-  playSound("lose");
-}
-
-// Flash effect for game container
-function flash(type) {
-  const cls = type === "correct" ? "flash-correct" : "flash-wrong";
-  gameContainer.classList.remove("flash-correct", "flash-wrong");
-  void gameContainer.offsetWidth; // force reflow so animation replays
-  gameContainer.classList.add(cls);
-}
-
-// Hangman animations
-function wiggleHangman() {
-  hangmanEl.classList.remove("wiggle");
-  void hangmanEl.offsetWidth;
-  hangmanEl.classList.add("wiggle");
-}
-
-function hangmanWinAnimation() {
-  hangmanEl.classList.remove("lose");
-  hangmanEl.classList.add("win");
-}
-
-function hangmanLoseAnimation() {
-  hangmanEl.classList.remove("win");
-  hangmanEl.classList.add("lose");
-}
-
-function resetHangmanAnimations() {
-  hangmanEl.classList.remove("win", "lose", "wiggle");
-}
-
-// Play sound helper
-function playSound(name) {
-  const sound = sfx[name];
-  if (!sound) return;
-  // Rewind and play
-  sound.currentTime = 0;
-  sound.play().catch(() => {
-    // ignore errors if autoplay is blocked
-  });
-}
+// Status message
+function
