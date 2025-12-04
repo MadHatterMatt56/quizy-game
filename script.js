@@ -141,23 +141,29 @@ function startNewGame() {
   const diff = difficultySelect.value;
   const words = WORD_LISTS[diff];
 
-  // Choose random word
-  secretWord = words[Math.floor(Math.random() * words.length)].toLowerCase();
+  // Choose random word + hint
+  const choice = words[Math.floor(Math.random() * words.length)];
+  secretWord = choice.word.toLowerCase();
+  currentHint = choice.hint;
 
   revealedLetters = Array(secretWord.length).fill("_");
   usedLetters = new Set();
   wrongGuesses = 0;
   maxWrong = MAX_WRONG[diff];
   gameOver = false;
+  hintRevealed = false;
 
   updateWordDisplay();
   updateUsedLettersDisplay();
   updateAttemptsDisplay();
+  updateHintDisplay();
   setStatus("Game started! Pick a letter.", "neutral");
 
   resetKeyboard();
   resetHangmanAnimations();
   hideAllBodyParts();
+}
+
 }
 
 // Handle a letter guess
